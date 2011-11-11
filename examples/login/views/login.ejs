@@ -1,14 +1,16 @@
-<form action="/login" method="post">
-	<div>
-	<label>Username:</label>
-	<input type="text" name="username"/><br/>
-	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="submit" value="Submit"/>
-	</div>
+<form action="/login" method="post" style="display:none;">
+	<input type="text" name="assertion"/>
 </form>
-<p><small>Hint - bob:secret</small></p>
+<img src="https://browserid.org/i/sign_in_red.png" id="browserid"/>
+<script>
+$("#browserid").click(function(){
+	navigator.id.getVerifiedEmail(function(assertion) {
+            if (assertion) {
+            	$("input").val(assertion);
+            	$("form").submit();
+            } else {
+            	location.reload();
+            }
+    });
+});
+</script>
